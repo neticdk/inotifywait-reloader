@@ -81,6 +81,14 @@ if [[ "$RELOAD_METHOD" == "SIGHUP" && -z "$SERVICE_NAME" ]]; then
   exit 1
 fi
 
+# Check if shareProcessNamespace: true has been configued on pod
+if [[ "$RELOAD_METHOD" == "SIGHUP" ]]; then
+  if [[ $(cat /proc/1/cmdline) != "/pause" ]]; then
+    log_message "error" "CONFIG" "Shared Process Namespace between Containers in a Pod must be enabled to use RELOAD_METHOD: SIGHUP"
+    exit 1
+  fi
+fi
+
 log_message "info" "RELOAD" "Starting Watches for paths: $WATCH_PATHS"
 while inotifywait -qq -r -e create,modify,delete,delete_self $WATCH_PATHS; do
   log_message "info" "RELOAD" "Updated detected; Reloading."
