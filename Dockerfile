@@ -1,4 +1,4 @@
-FROM alpine:3.19.1@sha256:6457d53fb065d6f250e1504b9bc42d5b6c65941d57532c072d929dd0628977d0
+FROM alpine:3.21.3@sha256:1c4eef651f65e2f7daee7ee785882ac164b02b78fb74503052a26dc061c90474
 
 RUN apk add --no-cache inotify-tools curl
 
