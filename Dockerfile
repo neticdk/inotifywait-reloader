@@ -2,9 +2,8 @@ FROM alpine:3.23.3@sha256:25109184c71bdad752c8312a8623239686a9a2071e8825f20acb8f
 
 RUN apk add --no-cache inotify-tools curl
 
-COPY docker-entrypoint.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+COPY --chmod=755 docker-entrypoint.sh /usr/local/bin/
 
-USER nonroot
+USER nobody
 
 ENTRYPOINT ["docker-entrypoint.sh"]
